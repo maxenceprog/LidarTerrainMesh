@@ -6,7 +6,6 @@
 #include <string.h>
 
 #include "meshoptimizer/src/meshoptimizer.h"
-#include "mmg/mmgs/libmmgs.h"
 
 #include "array.h"
 #include "chrono.h"
@@ -1088,6 +1087,7 @@ size_t fix_boundary_vertices(const Mesh &mesh, MBuf &data)
 
 static int improve_mesh_quality(Mesh &mesh, MBuf &data, const struct Cfg &cfg)
 {
+#ifndef NO_MMG
 	/* Probably safer and might help MMGS */
 	compact_mesh(mesh, data);
 
@@ -1140,7 +1140,10 @@ static int improve_mesh_quality(Mesh &mesh, MBuf &data, const struct Cfg &cfg)
 	 * we reproject them to the cube afterwards.
 	 */
 	fix_boundary_vertices(mesh, data);
-
+#else
+	(void)mesh; (void)data; (void)cfg;
+	printf("MMG skipped (compiled without mmg support).\n");
+#endif
 	return 0;
 }
 

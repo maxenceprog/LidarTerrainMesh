@@ -71,15 +71,15 @@ add_executable(french_lidar
 	mesh.cpp
 	mesh_adjacency.cpp
 	mesh_ply.cpp
-	mesh_inria.cpp
 	mesh_remesh.cpp
 	vertex_remap.cpp
 	mesh_utils.cpp
 	french_lidar.cpp
 	)
+target_compile_definitions(french_lidar PRIVATE NO_MMG)
 target_compile_features(french_lidar PRIVATE cxx_std_17)
 target_compile_options(french_lidar PRIVATE -Wall)
-target_link_libraries(french_lidar miniply meshoptimizer lazperf ${swiss_lidar_SOURCE_DIR}/extern/mmg/libmmgs.a)
+target_link_libraries(french_lidar miniply meshoptimizer lazperf)
 
 add_executable(compute_normals
 	las_read.cpp
